@@ -25,3 +25,10 @@ This image comes with a default configuration. To define an own configuration, j
 Logging
 -------
 It is possible to mount a custom logback.xml to /opt/hivemq/conf
+
+
+Start on docker native cluster
+------------------------------
+Since 1.12 docker supports native swarm mode. Due to it's routing mesh it also provides automated loadbalancing from outside as well in between containers. We incorporate this to build a higly available
+cluster without an explicit loadbalancer in front.
+(Not working yet ;)
