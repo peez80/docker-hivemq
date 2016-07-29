@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.4
 MAINTAINER philipp.lamp@stiffi.de
 
 COPY install_hivemq.sh /install_hivemq.sh
