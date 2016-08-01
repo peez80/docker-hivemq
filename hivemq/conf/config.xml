@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <hivemq xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="hivemq-config.xsd">
+        xsi:noNamespaceSchemaLocation="../../hivemq-config.xsd">
     <listeners>
         <tcp-listener>
             <port>${HIVEMQ_TCP_PORT}</port>
@@ -58,6 +58,7 @@
         <retry-interval>10</retry-interval>
         <max-queued-messages>1000</max-queued-messages>
     </mqtt>
+
     <throttling>
         <max-connections>-1</max-connections>
         <max-message-size>268435456</max-message-size>
@@ -91,22 +92,6 @@
             <mode>${HIVEMQ_PERSISTENCE_MODE}</mode>
         </retained-messages>
     </persistence>
-
-    <cluster>
-        <enabled>${HIVEMQ_CLUSTER_ENABLED}</enabled>
-        <transport>
-            <udp>
-                <bind-port>7800</bind-port>
-            </udp>
-        </transport>
-        <failure-detection>
-            <tcp-health-check>
-                <bind-port>7900</bind-port>
-            </tcp-health-check>
-        </failure-detection>
-    </cluster>
-
-
 </hivemq>
 
 

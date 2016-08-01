@@ -1,10 +1,12 @@
 FROM alpine:3.4
-MAINTAINER philipp.lamp@stiffi.de
+MAINTAINER peez@stiffi.de
 
-COPY install_hivemq.sh /install_hivemq.sh
-RUN source /install_hivemq.sh &&\
-    rm /install_hivemq.sh
-COPY config.xml /opt/hivemq/conf/config.xml
+COPY install_hivemq.sh docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh \
+    && source /install_hivemq.sh \
+    && rm /install_hivemq.sh
+COPY hivemq/ /opt/hivemq/
+RUN chown -R hivemq:hivemq /opt/hivemq/*
 
 
 ENV \
@@ -20,7 +22,7 @@ ENV \
     HIVEMQ_CLUSTER_ENABLED="true"
 
 
-EXPOSE $HIVEMQ_TCP_PORT $HIVEMQ_TCP_TLS_PORT $HIVEMQ_WEBSOCKET_PORT $HIVEMQ_WEBSOCKET_TLS_PORT 7800 7900
+EXPOSE $HIVEMQ_TCP_PORT $HIVEMQ_TCP_TLS_PORT $HIVEMQ_WEBSOCKET_PORT $HIVEMQ_WEBSOCKET_TLS_PORT 7800 7900 8555
 
 USER hivemq
-CMD ["/opt/hivemq/bin/run.sh"]
+CMD ["/docker-entrypoint.sh"]

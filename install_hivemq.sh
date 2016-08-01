@@ -10,9 +10,11 @@ unzip hivemq.zip
 rm hivemq.zip
 
 ln -s /opt/hivemq-* /opt/hivemq
-adduser -D -h /opt/hivemq hivemq
 
+adduser -D -h /opt/hivemq hivemq
 chown -R hivemq:hivemq /opt/hivemq-*
 chown -R hivemq:hivemq /opt/hivemq
+
+
 chmod +x /opt/hivemq/bin/run.sh
 

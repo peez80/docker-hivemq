@@ -3,7 +3,7 @@
 
 Vagrant.configure(2) do |config|
 
-  number_of_instances = 3
+  number_of_instances = 1
   (1..number_of_instances).each do |instance_number|
     config.vm.define "node#{instance_number}" do |host|
       host.vm.box = "ubuntu/trusty64"

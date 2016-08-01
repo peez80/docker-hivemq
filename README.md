@@ -32,3 +32,6 @@ Start on docker native cluster
 Since 1.12 docker supports native swarm mode. Due to it's routing mesh it also provides automated loadbalancing from outside as well in between containers. We incorporate this to build a higly available
 cluster without an explicit loadbalancer in front.
 (Not working yet ;)
+
+    docker swarm init --advertise-addr 192.168.33.111:2377
+    docker network create --driver overlay --subnet 192.168.110.0/24 hivemq
