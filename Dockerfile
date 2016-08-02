@@ -1,6 +1,8 @@
 FROM alpine:3.4
 MAINTAINER peez@stiffi.de
 
+RUN apk add --no-cache bash openjdk7-jre
+
 COPY install_hivemq.sh docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh \
     && source /install_hivemq.sh \

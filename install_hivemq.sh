@@ -1,7 +1,5 @@
 #!/bin/sh
 
-apk add --no-cache bash openjdk7-jre
-
 mkdir -p /opt
 cd /opt
 
