@@ -18,20 +18,40 @@ Info about persistence here
 
 Individual configuration
 ------------------------
-This image comes with a default configuration. To define an own configuration, just mount the config folder as you would with the license file:
+This image comes with a default configuration. To define an own configuration, just mount the config.xml as you would with the license file:
 
-    docker run -itd -v /local/path/to/config:/opt/hivemq/conf:ro peez/hivemq
+    docker run -itd -v /local/path/to/config.xml:/opt/hivemq/conf/config_initial.xml:ro peez/hivemq
+    
+It's important to use config_initial.xml as filename, since the startscript (docker-entrypoint.sh) copies it to config.xml and makes some modifications (especially with cluster operation) 
 
 Logging
 -------
 It is possible to mount a custom logback.xml to /opt/hivemq/conf
+
+TLS
+---
+If you want to use TLS, you HAVE to mount the keystore and (if applicable) the truststore, since the provided truststores are some rookie-like created self signed trust stores:
+
+    docker run -itd -v /local/path/to/keystore.jks:/opt/hivemq/cert/hivemq_keystore.jks:ro -v /local/path/to/truststore.jks:/opt/hivemq/cert/hivemq_truststore.jks peez/hivemq
+
 
 
 Start on docker native cluster
 ------------------------------
 Since 1.12 docker supports native swarm mode. Due to it's routing mesh it also provides automated loadbalancing from outside as well in between containers. We incorporate this to build a higly available
 cluster without an explicit loadbalancer in front.
-(Not working yet ;)
+
+To achieve this we have to be a little bit flexible. 
+!! STILL NOT WORKING !!
+Approach is - we create a overlay network in a given subnet. This subnet HAS to be a class-c network, so it must end with /24. Additionally we need to pass the network base as 
+environment variable to the docker containers. See Example:
 
     docker swarm init --advertise-addr 192.168.33.111:2377
     docker network create --driver overlay --subnet 192.168.110.0/24 hivemq
+    docker service create --name hivemq --network hivemq -p 1883:1883 -e SWARM_NETWORK_BASE=192.168.110 peez/hivemq
+
+It's absolutely important to write exactly the first three segments of your class c network since there is not much logic inside the start scripts that create a "static"
+cluster discovery from 192.168.110.1-254.
+
+But - IT'S STILL NOT WORKING YET ;)
+

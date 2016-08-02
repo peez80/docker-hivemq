@@ -35,7 +35,7 @@
             <port>${HIVEMQ_WEBSOCKET_TLS_PORT}</port>
             <bind-address>0.0.0.0</bind-address>
             <path>/mqtt</path>
-            <allow-extensions>false</allow-extensions>
+            <allow-extensions>true</allow-extensions>
             <subprotocols>
                 <subprotocol>mqttv3.1</subprotocol>
             </subprotocols>
@@ -92,7 +92,65 @@
             <mode>${HIVEMQ_PERSISTENCE_MODE}</mode>
         </retained-messages>
     </persistence>
+
+    <!--CLUSTER_START_TAG
+
+    <cluster>
+        <enabled>true</enabled>
+        <transport>
+            <tcp>
+                <bind-address>{{CLUSTER_IP}}</bind-address>
+                <bind-port>7800</bind-port>
+                <client-bind-address>{{CLUSTER_IP}}</client-bind-address>
+                <client-bind-port>15000</client-bind-port>
+            </tcp>
+        </transport>
+        <discovery>
+            <static>
+                <node>
+                    <host>{{SWARM_NETWORK_BASE}}.1</host>
+                    <port>7800</port>
+                </node>
+                <node>
+                    <host>{{SWARM_NETWORK_BASE}}.2</host>
+                    <port>7800</port>
+                </node>
+                <node>
+                    <host>{{SWARM_NETWORK_BASE}}.3</host>
+                    <port>7801</port>
+                </node>
+                <node>
+                    <host>{{SWARM_NETWORK_BASE}}.4</host>
+                    <port>7801</port>
+                </node>
+                <node>
+                    <host>{{SWARM_NETWORK_BASE}}.5</host>
+                    <port>7801</port>
+                </node>
+                <node>
+                    <host>{{SWARM_NETWORK_BASE}}.6</host>
+                    <port>7801</port>
+                </node>
+                <node>
+                    <host>{{SWARM_NETWORK_BASE}}.7</host>
+                    <port>7801</port>
+                </node>
+                <node>
+                    <host>{{SWARM_NETWORK_BASE}}.8</host>
+                    <port>7801</port>
+                </node>
+                <node>
+                    <host>{{SWARM_NETWORK_BASE}}.9</host>
+                    <port>7801</port>
+                </node>
+                <node>
+                    <host>{{SWARM_NETWORK_BASE}}.10</host>
+                    <port>7801</port>
+                </node>
+            </static>
+        </discovery>
+    </cluster>
+
+    CLUSTER_END_TAG-->
+
 </hivemq>
-
-
-
