@@ -3,6 +3,9 @@ MAINTAINER peez@stiffi.de
 
 RUN apk add --no-cache bash openjdk7-jre
 
+#Temporary install for debugging purposes
+RUN apk add --no-cache vim less
+
 COPY install_hivemq.sh docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh \
     && source /install_hivemq.sh \
@@ -24,7 +27,7 @@ ENV \
     HIVEMQ_CLUSTER_ENABLED="true"
 
 
-EXPOSE $HIVEMQ_TCP_PORT $HIVEMQ_TCP_TLS_PORT $HIVEMQ_WEBSOCKET_PORT $HIVEMQ_WEBSOCKET_TLS_PORT 7800 7900 8555
+EXPOSE $HIVEMQ_TCP_PORT $HIVEMQ_TCP_TLS_PORT $HIVEMQ_WEBSOCKET_PORT $HIVEMQ_WEBSOCKET_TLS_PORT 7800 7900 8555 15000
 
 USER hivemq
 CMD ["/docker-entrypoint.sh"]
