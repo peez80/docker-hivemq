@@ -1,5 +1,8 @@
+
 Professional HiveMQ Docker Image
 ================================
+[![](https://images.microbadger.com/badges/image/peez/hivemq.svg)](https://microbadger.com/images/peez/hivemq "Get your own image badge on microbadger.com")
+
 
 !! Image still under construction. Cluster not yet working and functionality (especially tls) not tested !!
 
