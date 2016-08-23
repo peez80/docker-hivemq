@@ -17,17 +17,20 @@ chown -R hivemq:hivemq /opt/hivemq
 chmod +x /opt/hivemq/bin/run.sh
 
 #Install file authentication plugin
-mkdir -p /opt/file-auth-plugin
-mkdir -p /opt/tools
+INSTALL_TEMP=/opt/file-auth-plugin-install
+mkdir -p $INSTALL_TEMP
 
-cd /opt/file-auth-plugin
+
+cd $INSTALL_TEMP
 wget -O file-auth.zip http://www.hivemq.com/wp-content/uploads/file-authentication-3.0.2-distribution.zip
 unzip file-auth.zip
 rm file-auth.zip
 
+mkdir -p /opt/hivemq-modules/fileauth/bin
 mv file-authentication-plugin-3.0.2.jar LICENSE.txt /opt/hivemq-modules/fileauth/bin
+
+mkdir -p /opt/tools
 mv tools/file-authentication-plugin-utility-1.1.jar /opt/tools
 
-
-
-cd ..
+rm -rf $INSTALL_TEMP
+cd /opt
