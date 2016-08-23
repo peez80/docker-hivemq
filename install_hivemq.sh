@@ -8,10 +8,10 @@ wget -O hivemq.zip http://www.hivemq.com/download.php?token=a2903f0457bc42959785
 unzip hivemq.zip
 rm hivemq.zip
 
-ln -s /opt/hivemq-* /opt/hivemq
+mv /opt/hivemq-* /opt/hivemq
 
 adduser -D -h /opt/hivemq hivemq
-chown -R hivemq:hivemq /opt/hivemq-*
+#chown -R hivemq:hivemq /opt/hivemq-*
 chown -R hivemq:hivemq /opt/hivemq
 
 

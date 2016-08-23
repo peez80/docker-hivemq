@@ -11,7 +11,6 @@ RUN chmod +x /docker-entrypoint.sh \
     && source /install_hivemq.sh \
     && rm /install_hivemq.sh
 COPY opt/ /opt/
-RUN chown -R hivemq:hivemq /opt/hivemq/*
 
 
 ENV \
