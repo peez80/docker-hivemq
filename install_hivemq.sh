@@ -11,7 +11,6 @@ rm hivemq.zip
 mv /opt/hivemq-* /opt/hivemq
 
 adduser -D -h /opt/hivemq hivemq
-#chown -R hivemq:hivemq /opt/hivemq-*
 chown -R hivemq:hivemq /opt/hivemq
 
 
