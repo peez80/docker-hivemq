@@ -29,4 +29,16 @@ if [ ! -z "$SWARM_NETWORK_BASE" ]; then
 fi
 
 
+# Enable Auth Plugin if necessary
+if [ "$HIVEMQ_DISABLE_AUTH_PLUGIN"=="true" ]; then
+    echo "Not Activating Auth plugin due to HIVEMQ_DISABLE_AUTH_PLUGIN"
+    # This way is not yet compatible with docker stop and start. only with rm and run.
+else
+    echo "Enabling Auth plugin"
+    ln -s /opt/hivemq-modules/fileauth/bin/file-authentication-plugin-3.0.2.jar /opt/hivemq/plugins/file-authentication-plugin-3.0.2.jar
+    ln -s /opt/hivemq-modules/fileauth/bin/credentials.properties /opt/hivemq/plugins/credentials.properties
+    ln -s /opt/hivemq-modules/fileauth/bin/fileAuthConfiguration.properties /opt/hivemq/plugins/fileAuthConfiguration.properties
+fi
+
+
 /opt/hivemq/bin/run.sh

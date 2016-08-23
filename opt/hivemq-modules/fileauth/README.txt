@@ -1,0 +1,1 @@
+Files in this folder will be linked to the suitable position inside /opt/hivemq if file auth is enabled.

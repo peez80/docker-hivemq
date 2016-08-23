@@ -7,12 +7,12 @@ Vagrant.configure(2) do |config|
   (1..number_of_instances).each do |instance_number|
     config.vm.define "node#{instance_number}" do |host|
       host.vm.box = "ubuntu/trusty64"
-      host.vm.network "private_network", ip: "192.168.33.11#{instance_number}"
+      #host.vm.network "private_network", ip: "192.168.33.11#{instance_number}"
       host.vm.hostname = "node#{instance_number}"
 
       host.vm.provider "virtualbox" do |v|
         v.memory = 1024
-        v.cpus = 1
+        v.cpus = 2
       end
 
 

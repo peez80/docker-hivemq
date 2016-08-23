@@ -10,7 +10,7 @@ COPY install_hivemq.sh docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh \
     && source /install_hivemq.sh \
     && rm /install_hivemq.sh
-COPY hivemq/ /opt/hivemq/
+COPY opt/ /opt/
 RUN chown -R hivemq:hivemq /opt/hivemq/*
 
 

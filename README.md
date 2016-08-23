@@ -41,6 +41,17 @@ Plugins
 -------
 To add plugins you could mount them to the plugin directory as described. For ease of use I recommend instead extending the Dockerfile.
 
+Authentication
+--------------
+By default the file authentication plugin (see http://www.hivemq.com/plugin/file-authentication/) is installed in production-ready configuration and exactly one user.
+
+| User | Password |
+| ---- | -------- |
+| hivemq | test |
+
+To disable the authentication completely (e.g. for testing purposes), start the docker image with `-e HIVEMQ_DISABLE_AUTH_PLUGIN=true`
+
+
 
 Start on docker native cluster
 ------------------------------
