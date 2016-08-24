@@ -36,8 +36,8 @@ if [ "$HIVEMQ_DISABLE_AUTH_PLUGIN" == "true" ]; then
 else
     echo "Enabling Auth plugin"
     ln -s /opt/hivemq-modules/fileauth/bin/file-authentication-plugin-3.0.2.jar /opt/hivemq/plugins/file-authentication-plugin-3.0.2.jar
-    ln -s /opt/hivemq-modules/fileauth/bin/credentials.properties /opt/hivemq/plugins/credentials.properties
-    ln -s /opt/hivemq-modules/fileauth/bin/fileAuthConfiguration.properties /opt/hivemq/plugins/fileAuthConfiguration.properties
+    ln -s /opt/hivemq-modules/fileauth/conf/credentials.properties /opt/hivemq/plugins/credentials.properties
+    ln -s /opt/hivemq-modules/fileauth/conf/fileAuthConfiguration.properties /opt/hivemq/plugins/fileAuthConfiguration.properties
 fi
 
 
