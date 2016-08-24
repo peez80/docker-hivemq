@@ -30,7 +30,7 @@ fi
 
 
 # Enable Auth Plugin if necessary
-if [ "$HIVEMQ_DISABLE_AUTH_PLUGIN"=="true" ]; then
+if [ "$HIVEMQ_DISABLE_AUTH_PLUGIN" == "true" ]; then
     echo "Not Activating Auth plugin due to HIVEMQ_DISABLE_AUTH_PLUGIN"
     # This way is not yet compatible with docker stop and start. only with rm and run.
 else
