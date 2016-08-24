@@ -43,13 +43,20 @@ To add plugins you could mount them to the plugin directory as described. For ea
 
 Authentication
 --------------
-By default the file authentication plugin (see http://www.hivemq.com/plugin/file-authentication/) is installed in production-ready configuration and exactly one user.
+By default the file authentication plugin (see http://www.hivemq.com/plugin/file-authentication/) is installed and started. To disable the plugin start the docker container with `-e HIVEMQ_DISABLE_AUTH_PLUGIN=true`.
+
+The predefined credentials are:
 
 | User | Password |
 | ---- | -------- |
 | hivemq | test |
 
-To disable the authentication completely (e.g. for testing purposes), start the docker image with `-e HIVEMQ_DISABLE_AUTH_PLUGIN=true`
+By default the plugin is already configured in production grade as described on the plugin homepage above. To change the configuration file, mount (or place by Dockerfile) your own fileAuthConfiguration.properties to `/opt/hivemq-modules/fileauth/conf/fileAuthConfiguration.properties`.
+For changing the credentials you could either use the credentials file with the tool provided by the plugin or mount (or place by Dockerfile) your own credentials file to `/opt/hivemq-modules/fileauth/conf/credentials.properties`.
+
+If mounting one or both of these files please have in mind that they reside in the same directory. So if you mount the directory instead of the file itself, make sure to have both files in this dir. 
+
+
 
 
 
