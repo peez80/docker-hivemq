@@ -99,54 +99,13 @@
         <enabled>true</enabled>
         <transport>
             <tcp>
-                <bind-address>{{CLUSTER_IP}}</bind-address>
+                <bind-address>{{CLUSTER_IP_HERE}}</bind-address>
                 <bind-port>7800</bind-port>
-                <client-bind-address>{{CLUSTER_IP}}</client-bind-address>
-                <client-bind-port>15000</client-bind-port>
             </tcp>
         </transport>
         <discovery>
             <static>
-                <node>
-                    <host>{{SWARM_NETWORK_BASE}}.1</host>
-                    <port>7800</port>
-                </node>
-                <node>
-                    <host>{{SWARM_NETWORK_BASE}}.2</host>
-                    <port>7800</port>
-                </node>
-                <node>
-                    <host>{{SWARM_NETWORK_BASE}}.3</host>
-                    <port>7800</port>
-                </node>
-                <node>
-                    <host>{{SWARM_NETWORK_BASE}}.4</host>
-                    <port>7800</port>
-                </node>
-                <node>
-                    <host>{{SWARM_NETWORK_BASE}}.5</host>
-                    <port>7800</port>
-                </node>
-                <node>
-                    <host>{{SWARM_NETWORK_BASE}}.6</host>
-                    <port>7800</port>
-                </node>
-                <node>
-                    <host>{{SWARM_NETWORK_BASE}}.7</host>
-                    <port>7800</port>
-                </node>
-                <node>
-                    <host>{{SWARM_NETWORK_BASE}}.8</host>
-                    <port>7800</port>
-                </node>
-                <node>
-                    <host>{{SWARM_NETWORK_BASE}}.9</host>
-                    <port>7800</port>
-                </node>
-                <node>
-                    <host>{{SWARM_NETWORK_BASE}}.10</host>
-                    <port>7800</port>
-                </node>
+                {{STATIC_NODE_CONFIG_HERE}}
             </static>
         </discovery>
     </cluster>

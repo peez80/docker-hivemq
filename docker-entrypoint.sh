@@ -22,10 +22,19 @@ if [ ! -z "$SWARM_NETWORK_BASE" ]; then
 
 
     echo "Replacing cluster bind address in config.xml..."
-    sed -i "s/{{CLUSTER_IP}}/$MY_SWARM_NETWORK_ADDRESS/g" /opt/hivemq/conf/config.xml
+    sed -i "s/{{CLUSTER_IP_HERE}}/$MY_SWARM_NETWORK_ADDRESS/g" /opt/hivemq/conf/config.xml
 
-    echo "Replacing docker network base in config.xml..."
-    sed -i "s/{{SWARM_NETWORK_BASE}}/$SWARM_NETWORK_BASE/g" /opt/hivemq/conf/config.xml
+
+    echo "Building static cluster configuration..."
+    TMPFILE=/tmp/clusterconfig.xml
+    echo "" > $TMPFILE
+    IP_SUFFIX=1
+    while [  $IP_SUFFIX -lt 255 ]; do
+        echo "<node><host>$SWARM_NETWORK_BASE.$IP_SUFFIX</host><port>7800</port></node>" >> $TMPFILE
+        let IP_SUFFIX=IP_SUFFIX+1
+    done
+    sed -e '/{{STATIC_NODE_CONFIG_HERE}}/ {' -e "r $TMPFILE" -e 'd' -e '}' -i /opt/hivemq/conf/config.xml
+    rm $TMPFILE
 fi
 
 

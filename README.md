@@ -4,9 +4,6 @@ Professional HiveMQ Docker Image
 [![](https://images.microbadger.com/badges/version/peez/hivemq.svg)](http://microbadger.com/images/peez/hivemq "Get your own version badge on microbadger.com")  [![](https://images.microbadger.com/badges/image/peez/hivemq.svg)](https://microbadger.com/images/peez/hivemq "Get your own image badge on microbadger.com")
 
 
-!! Image still under construction. Cluster not yet working and functionality (especially tls) not tested !!
-
-
 Installing a license
 --------------------
 By default hivemq starts with a standard license for development purposes. 
@@ -25,7 +22,9 @@ This image comes with a default configuration. To define an own configuration, j
 
     docker run -itd -v /local/path/to/config.xml:/opt/hivemq/conf/config_initial.xml:ro peez/hivemq
     
-It's important to use config_initial.xml as filename, since the startscript (docker-entrypoint.sh) copies it to config.xml and makes some modifications (especially with cluster operation) 
+It's important to use config_initial.xml as filename, since the startscript (docker-entrypoint.sh) copies it to config.xml and makes some modifications (especially with cluster operation).
+ 
+Please be aware that if you exchange the original configuration file and if the replacement tags inside the original file are removed, many of the original function won't work, so it's not recommended to replace the config.xml.
 
 Logging
 -------
@@ -33,13 +32,13 @@ It is possible to mount a custom logback.xml to /opt/hivemq/conf
 
 TLS
 ---
-If you want to use TLS, you HAVE to mount the keystore and (if applicable) the truststore, since the provided truststores are some rookie-like created self signed trust stores:
+If you want to use TLS, you HAVE to mount the keystore and (if applicable) the truststore, since the provided stores are some rookie-like created self signed trust stores:
 
     docker run -itd -v /local/path/to/keystore.jks:/opt/hivemq/cert/hivemq_keystore.jks:ro -v /local/path/to/truststore.jks:/opt/hivemq/cert/hivemq_truststore.jks peez/hivemq
 
 Plugins
 -------
-To add plugins you could mount them to the plugin directory as described. For ease of use I recommend instead extending the Dockerfile.
+To add plugins you could mount them to the plugin directory as described. For ease of use I would recommend extending the Dockerfile instead.
 
 Authentication
 --------------
@@ -65,9 +64,10 @@ Start on docker native cluster
 Since 1.12 docker supports native swarm mode. Due to it's routing mesh it also provides automated loadbalancing from outside as well in between containers. We incorporate this to build a higly available
 cluster without an explicit loadbalancer in front.
 
-To achieve this we have to be a little bit flexible.
-!! STILL NOT WORKING !!
-Approach is - we create a overlay network in a given subnet. This subnet HAS to be a class-c network, so it must end with /24. Additionally we need to pass the network base as 
+The easiest way to set up a hivemq cluster would be one of the auto discovery features - this uses tcp broadcast or udp multicast. Unfortunately docker networking doesn't support any of these.
+Therefore we have to be a little bit flexible.
+
+Approach is - we create a overlay network in a manually given subnet. This subnet HAS to be a full class-c network, so it must end with /24. Additionally we need to pass the network base as 
 environment variable to the docker containers. See Example:
 
     docker swarm init
@@ -83,5 +83,3 @@ Often docker doesn't allocate the correct IP-address for advertising in the clus
 
 Unfortunately HiveMQs auto discovery won't work on docker multihost networking, since neither udp multicast nor tcp broadcast are supported in these networks. Therefore it's important to follow the steps above exactly.
 The docker container then will automatically create a statically allocated cluster with nodes of the entire Class-C network (e.g. 192.168.110.1 - 192.168.110.254) 
-
-But - IT'S STILL NOT WORKING YET ;)
