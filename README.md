@@ -4,6 +4,11 @@ Professional HiveMQ Docker Image
 [![](https://images.microbadger.com/badges/version/peez/hivemq.svg)](http://microbadger.com/images/peez/hivemq "Get your own version badge on microbadger.com")  [![](https://images.microbadger.com/badges/image/peez/hivemq.svg)](https://microbadger.com/images/peez/hivemq "Get your own image badge on microbadger.com")
 
 
+General
+-------
+The HiveMQ Docker Image uses a production grade pre configuration. Usually you shouldn't have to change the default configurations unless you aim at some special cases.
+Everything you can configure is done by environment variables. Please have a look at the Dockerfile. Everything you see there can be changed by ENV variables.
+
 Installing a license
 --------------------
 By default hivemq starts with a standard license for development purposes. 
@@ -13,7 +18,8 @@ To add your license file, mount it to _/opt/hivemq/license_:
 
 Persistence
 -----------
-Info about persistence here
+By default in-memory persistence is used. If you need to use some persistent storage you can change this via the environment variable `HIVEMQ_PERSISTENCE_MODE`. In general HiveMQ configuration there are several types of persistence you can configure. With this ENV variable you configure all of them at once. It is curently not in scope to configure them one by one.
+For details on persistence see http://www.hivemq.com/docs/hivemq/latest/#mqtt-configuration-persistence-chapter.
 
 
 Individual configuration
@@ -35,6 +41,12 @@ TLS
 If you want to use TLS, you HAVE to mount the keystore and (if applicable) the truststore, since the provided stores are some rookie-like created self signed trust stores:
 
     docker run -itd -v /local/path/to/keystore.jks:/opt/hivemq/cert/hivemq_keystore.jks:ro -v /local/path/to/truststore.jks:/opt/hivemq/cert/hivemq_truststore.jks peez/hivemq
+    
+Additionally you have to set the details of your keystores by using the following ENV variables:
+
+    HIVEMQ_KEYSTORE_PASSWORD
+    HIVEMQ_PRIVATE_KEY_PASSWORD
+    HIVEMQ_TRUSTSTORE_PASSWORD
 
 Plugins
 -------
