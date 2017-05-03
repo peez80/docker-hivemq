@@ -4,7 +4,7 @@ MAINTAINER peez@stiffi.de
 RUN apk add --no-cache bash openjdk7-jre
 
 #Temporary install for debugging purposes
-RUN apk add --no-cache vim less
+#RUN apk add --no-cache vim less
 
 COPY install_hivemq.sh docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh \
