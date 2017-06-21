@@ -33,4 +33,17 @@ mkdir -p /opt/tools
 mv tools/file-authentication-plugin-utility-1.1.jar /opt/tools
 
 rm -rf $INSTALL_TEMP
+
+#Install graphite plugin
+INSTALL_TEMP_GRAPHITE=/opt/graphite-plugin-install
+mkdir -p $INSTALL_TEMP_GRAPHITE
+cd $INSTALL_TEMP_GRAPHITE
+wget http://www.hivemq.com/wp-content/uploads/hivemq-graphite-metrics-plugin-3.0.0.zip
+unzip hivemq-graphite-metrics-plugin-3.0.0.zip
+rm hivemq-graphite-metrics-plugin-3.0.0.zip
+mkdir -p /opt/hivemq-modules/graphite-metrics-plugin
+mv hivemq-graphite-metrics-plugin-3.0.0.jar LICENSE.txt /opt/hivemq-modules/graphite-metrics-plugin
+mv graphite-plugin.properties /opt/hivemq-modules/graphite-metrics-plugin
+rm -rf $INSTALL_TEMP_GRAPHITE
+
 cd /opt
