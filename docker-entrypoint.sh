@@ -51,10 +51,10 @@ fi
 
 # Enable Graphite metrics plugin if necessary.
 echo $GRAPHITE_HOST
-echo $HIVEMQ_GRAPHITE_PLUGIN_JAR_FILE_NAME
 if [ ! -z "$GRAPHITE_HOST" ]; then
   echo "Installing the graphite metrics plugin"
   HIVEMQ_GRAPHITE_PLUGIN_JAR_FILE_NAME=hivemq-graphite-metrics-plugin-3.1.1'.jar'
+  echo $HIVEMQ_GRAPHITE_PLUGIN_JAR_FILE_NAME
   sed -i "s/localhost/$GRAPHITE_HOST/g" /opt/hivemq-modules/graphite-metrics-plugin/graphite-plugin.properties
   sed -i "s/reportingInterval \= 60/reportingInterval \= 10/g" /opt/hivemq-modules/graphite-metrics-plugin/graphite-plugin.properties
   sed -i "s/prefix \=/prefix \= hivemq/g" /opt/hivemq-modules/graphite-metrics-plugin/graphite-plugin.properties
