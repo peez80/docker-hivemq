@@ -4,7 +4,8 @@ mkdir -p /opt
 cd /opt
 
 #Install HiveMQ
-wget -O hivemq.zip http://www.hivemq.com/download.php?token=a1b4752797ca72e00d4074f0c1b5dc2c
+# 3.2.6
+wget -O hivemq.zip http://www.hivemq.com/download.php?token=5d4b6af8b7880ee30d17ead4f80c152a
 unzip hivemq.zip
 rm hivemq.zip
 
