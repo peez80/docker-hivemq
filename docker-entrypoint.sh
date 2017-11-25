@@ -1,41 +1,42 @@
 #!/bin/bash
+# Attention!! Currently I'm working with file links and not removing file links - this way docker only docker rm should work really realiably - especially when changing environment parameters!
 
-#restore original config.xml. This was the container is restart aware
+
+#restore original config.xml. This way the container is restart aware
 cp /opt/hivemq/conf/config_initial.xml /opt/hivemq/conf/config.xml
 
+# Enable Database Cluster Discovery if necessary
+if [ ! -z "$HIVEMQ_CLUSTER_JDBC_URL" ]; then
+    echo "Setting up HiveMQ DB Cluster with Database: $HIVEMQ_CLUSTER_JDBC_URL. User: $HIVEMQ_CLUSTER_JDBC_USER"
 
-#export MY_SWARM_NETWORK_ADDRESS=$(ifconfig | awk '/inet addr/{print substr($2,6)}' | grep 192)
-#echo "ADDR: $MY_SWARM_NETWORK_ADDRESS"
+    if [ -z "$HIVEMQ_CLUSTER_JDBC_USER" ]; then
+        echo "Environment Variable HIVEMQ_CLUSTER_JDBC_USER not found. Hopefully this is intentionally ;)"
+    fi
+    if [ -z "$HIVEMQ_CLUSTER_JDBC_PASSWORD" ]; then
+        echo "Environment Variable HIVEMQ_CLUSTER_JDBC_PASSWORD not found. Hopefully this is intentionally ;)"
+    fi
 
-#sed -i "s/{{MY_IP}}/$MY_SWARM_NETWORK_ADDRESS/g" /opt/hivemq/conf/config.xml
 
-#Replace bind-address 0.0.0.0 by the actual docker multihost networking ip
-#For this we need to have a docker overlay network with a given subnet.
-echo "Base: $SWARM_NETWORK_BASE"
-if [ ! -z "$SWARM_NETWORK_BASE" ]; then
-    echo "Found SWARM_NETWORK_BASE Variable. Configuring bind-addr..."
-    MY_SWARM_NETWORK_ADDRESS=$(ifconfig | awk '/inet addr/{print substr($2,6)}' | grep "$SWARM_NETWORK_BASE")
-    echo "Found Addr: $MY_SWARM_NETWORK_ADDRESS"
-
+    # Remove Cluster comment tags to enable the cluster config part in config.xml
     sed -i "s/<!--CLUSTER_START_TAG//g" /opt/hivemq/conf/config.xml
     sed -i "s/CLUSTER_END_TAG-->//g" /opt/hivemq/conf/config.xml
 
-
-    echo "Replacing cluster bind address in config.xml..."
+    #Set Cluster IP
+    MY_SWARM_NETWORK_ADDRESS=$(ifconfig eth0 | awk '/inet addr/{print substr($2,6)}')
     sed -i "s/{{CLUSTER_IP_HERE}}/$MY_SWARM_NETWORK_ADDRESS/g" /opt/hivemq/conf/config.xml
 
+    # Manually build Plugin configuration
+    cp /opt/hivemq-modules/database-cluster-discovery/conf/jdbc-database-cluster-discovery.properties /opt/hivemq/conf
 
-    echo "Building static cluster configuration..."
-    TMPFILE=/tmp/clusterconfig.xml
-    echo "" > $TMPFILE
-    IP_SUFFIX=1
-    while [  $IP_SUFFIX -lt 255 ]; do
-        echo "<node><host>$SWARM_NETWORK_BASE.$IP_SUFFIX</host><port>7800</port></node>" >> $TMPFILE
-        let IP_SUFFIX=IP_SUFFIX+1
-    done
-    sed -e '/{{STATIC_NODE_CONFIG_HERE}}/ {' -e "r $TMPFILE" -e 'd' -e '}' -i /opt/hivemq/conf/config.xml
-    rm $TMPFILE
+    sed -i "s~{{jdbcUrl}}~$HIVEMQ_CLUSTER_JDBC_URL~g" /opt/hivemq/conf/jdbc-database-cluster-discovery.properties
+    sed -i "s/{{jdbcUser}}/$HIVEMQ_CLUSTER_JDBC_USER/g" /opt/hivemq/conf/jdbc-database-cluster-discovery.properties
+    sed -i "s/{{jdbcPassword}}/$HIVEMQ_CLUSTER_JDBC_PASSWORD/g" /opt/hivemq/conf/jdbc-database-cluster-discovery.properties
+
+
+    # Link Plugin from installation dir to hivemq dir
+    ln -s /opt/hivemq-modules/database-cluster-discovery/bin/database-cluster-discovery-1.0.0.jar /opt/hivemq/plugins/database-cluster-discovery.jar
 fi
+
 
 
 # Enable Auth Plugin if necessary

@@ -103,10 +103,10 @@
                 <bind-port>7800</bind-port>
             </tcp>
         </transport>
-        <discovery>
-            <static>
-                {{STATIC_NODE_CONFIG_HERE}}
-            </static>
+       <discovery>
+            <plugin>
+                <reload-interval>30</reload-interval>
+            </plugin>
         </discovery>
     </cluster>
 

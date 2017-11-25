@@ -3,9 +3,10 @@
 mkdir -p /opt
 cd /opt
 
+################################################
 #Install HiveMQ
-# 3.2.6
-wget -O hivemq.zip http://www.hivemq.com/download.php?token=5d4b6af8b7880ee30d17ead4f80c152a
+# 3.3.1
+wget -O hivemq.zip https://www.hivemq.com/download.php?token=aa62eb764d53b4837ab5ddb5eba8f46f
 unzip hivemq.zip
 rm hivemq.zip
 
@@ -14,13 +15,12 @@ mv /opt/hivemq-* /opt/hivemq
 adduser -D -h /opt/hivemq hivemq
 chown -R hivemq:hivemq /opt/hivemq
 
-
 chmod +x /opt/hivemq/bin/run.sh
 
+######################################################
 #Install file authentication plugin
 INSTALL_TEMP=/opt/file-auth-plugin-install
 mkdir -p $INSTALL_TEMP
-
 
 cd $INSTALL_TEMP
 wget -O file-auth.zip http://www.hivemq.com/wp-content/uploads/file-authentication-3.0.2-distribution.zip
@@ -35,6 +35,7 @@ mv tools/file-authentication-plugin-utility-1.1.jar /opt/tools
 
 rm -rf $INSTALL_TEMP
 
+################################################################################
 #Install graphite plugin
 INSTALL_TEMP_GRAPHITE=/opt/graphite-plugin-install
 mkdir -p $INSTALL_TEMP_GRAPHITE
@@ -52,3 +53,12 @@ mv graphite-plugin.properties /opt/hivemq-modules/graphite-metrics-plugin
 rm -rf $INSTALL_TEMP_GRAPHITE
 
 cd /opt
+
+
+#################################################################
+# Download Database cluster plugin
+mkdir -p /opt/hivemq-modules/database-cluster-discovery/bin
+# For updating change Download-URL and adjust docker-entrypoint.sh to use the correct version
+wget -O /opt/hivemq-modules/database-cluster-discovery/bin/database-cluster-discovery-1.0.0.jar https://github.com/peez80/hivemq-database-cluster-discovery-plugin/releases/download/1.0.0/database-cluster-discovery-1.0.0.jar
+
+
