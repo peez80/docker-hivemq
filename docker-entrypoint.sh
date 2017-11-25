@@ -49,5 +49,19 @@ else
     ln -s /opt/hivemq-modules/fileauth/conf/fileAuthConfiguration.properties /opt/hivemq/plugins/fileAuthConfiguration.properties
 fi
 
+# Enable Graphite metrics plugin if necessary.
+echo $GRAPHITE_HOST
+if [ ! -z "$GRAPHITE_HOST" ]; then
+  echo "Installing the graphite metrics plugin"
+  HIVEMQ_GRAPHITE_PLUGIN_JAR_FILE_NAME=hivemq-graphite-metrics-plugin-3.1.1'.jar'
+  echo $HIVEMQ_GRAPHITE_PLUGIN_JAR_FILE_NAME
+  sed -i "s/localhost/$GRAPHITE_HOST/g" /opt/hivemq-modules/graphite-metrics-plugin/graphite-plugin.properties
+  sed -i "s/reportingInterval \= 60/reportingInterval \= 10/g" /opt/hivemq-modules/graphite-metrics-plugin/graphite-plugin.properties
+  sed -i "s/prefix \=/prefix \= hivemq/g" /opt/hivemq-modules/graphite-metrics-plugin/graphite-plugin.properties
+  ln -s /opt/hivemq-modules/graphite-metrics-plugin/$HIVEMQ_GRAPHITE_PLUGIN_JAR_FILE_NAME /opt/hivemq/plugins/$HIVEMQ_GRAPHITE_PLUGIN_JAR_FILE_NAME
+  ln -s /opt/hivemq-modules/graphite-metrics-plugin/graphite-plugin.properties /opt/hivemq/conf/graphite-plugin.properties
+else
+  echo "NOT installing the graphite metrics plugin."
+fi
 
 /opt/hivemq/bin/run.sh

@@ -6,6 +6,10 @@ RUN apk add --no-cache bash openjdk7-jre
 #Temporary install for debugging purposes
 #RUN apk add --no-cache vim less
 
+RUN   apk update \
+ &&   apk add ca-certificates wget \
+ &&   update-ca-certificates
+
 COPY install_hivemq.sh docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh \
     && source /install_hivemq.sh \
