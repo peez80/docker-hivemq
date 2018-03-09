@@ -45,9 +45,9 @@ if [ "$HIVEMQ_DISABLE_AUTH_PLUGIN" == "true" ]; then
     # This way is not yet compatible with docker stop and start. only with rm and run.
 else
     echo "Enabling Auth plugin"
-    ln -s /opt/hivemq-modules/fileauth/bin/file-authentication-plugin-3.0.2.jar /opt/hivemq/plugins/file-authentication-plugin-3.0.2.jar
-    ln -s /opt/hivemq-modules/fileauth/conf/credentials.properties /opt/hivemq/plugins/credentials.properties
-    ln -s /opt/hivemq-modules/fileauth/conf/fileAuthConfiguration.properties /opt/hivemq/plugins/fileAuthConfiguration.properties
+    ln -s /opt/hivemq-modules/fileauth/bin/file-authentication-plugin-3.1.1.jar /opt/hivemq/plugins/file-authentication-plugin-3.1.1.jar
+    ln -s /opt/hivemq-modules/fileauth/conf/credentials.properties /opt/hivemq/conf/credentials.properties
+    ln -s /opt/hivemq-modules/fileauth/conf/fileAuthConfiguration.properties /opt/hivemq/conf/fileAuthConfiguration.properties
 fi
 
 # Enable Graphite metrics plugin if necessary.

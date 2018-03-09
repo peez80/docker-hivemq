@@ -5,11 +5,15 @@ LABEL maintainer="peez@stiffi.de"
 RUN apk add --no-cache bash openjdk8-jre ca-certificates wget \
     && update-ca-certificates
 
-COPY install_hivemq.sh docker-entrypoint.sh /
-RUN chmod +x /docker-entrypoint.sh \
-    && source /install_hivemq.sh \
-    && rm /install_hivemq.sh
+COPY docker-install-scripts/ /docker-install-scripts/
+RUN source /docker-install-scripts/install_hivemq.sh
+RUN source /docker-install-scripts/install_auth_plugin.sh
+RUN source /docker-install-scripts/install_graphite_plugin.sh
+RUN source /docker-install-scripts/install_database_cluster_plugin.sh
+
+# Since /opt overwrites some default files that are created upon hivemq installation, this COPY command has to be done AFTER the install-scripts
 COPY opt/ /opt/
+
 RUN chown -R hivemq:hivemq /opt
 
 
@@ -30,4 +34,4 @@ ENV \
 EXPOSE $HIVEMQ_TCP_PORT $HIVEMQ_TCP_TLS_PORT $HIVEMQ_WEBSOCKET_PORT $HIVEMQ_WEBSOCKET_TLS_PORT 7800 7900 8555 15000
 
 USER hivemq
-CMD ["/docker-entrypoint.sh"]
+CMD ["/opt/docker-entrypoint.sh"]
