@@ -13,8 +13,8 @@ RUN source /docker-install-scripts/install_database_cluster_plugin.sh
 
 # Since /opt overwrites some default files that are created upon hivemq installation, this COPY command has to be done AFTER the install-scripts
 COPY opt/ /opt/
-
-RUN chown -R hivemq:hivemq /opt
+RUN chown -R hivemq:hivemq /opt \
+    && chmod +x /opt/docker-entrypoint.sh
 
 
 ENV \
