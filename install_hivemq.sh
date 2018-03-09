@@ -5,8 +5,8 @@ cd /opt
 
 ################################################
 #Install HiveMQ
-# 3.3.1
-wget -O hivemq.zip https://www.hivemq.com/download.php?token=aa62eb764d53b4837ab5ddb5eba8f46f
+# 3.3.3
+wget -O hivemq.zip https://www.hivemq.com/download.php?token=6264303c0ea115248df151f50a722572
 unzip hivemq.zip
 rm hivemq.zip
 
@@ -23,12 +23,12 @@ INSTALL_TEMP=/opt/file-auth-plugin-install
 mkdir -p $INSTALL_TEMP
 
 cd $INSTALL_TEMP
-wget -O file-auth.zip http://www.hivemq.com/wp-content/uploads/file-authentication-3.0.2-distribution.zip
+wget -O file-auth.zip https://www.hivemq.com/wp-content/uploads/file-authentication-3.1.1-distribution.zip
 unzip file-auth.zip
 rm file-auth.zip
 
 mkdir -p /opt/hivemq-modules/fileauth/bin
-mv file-authentication-plugin-3.0.2.jar LICENSE.txt /opt/hivemq-modules/fileauth/bin
+mv file-authentication-plugin-3.1.1.jar LICENSE.txt /opt/hivemq-modules/fileauth/bin
 
 mkdir -p /opt/tools
 mv tools/file-authentication-plugin-utility-1.1.jar /opt/tools

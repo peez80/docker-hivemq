@@ -1,5 +1,5 @@
-FROM alpine:3.6
-MAINTAINER peez@stiffi.de
+FROM alpine:3.7
+LABEL maintainer="peez@stiffi.de"
 
 
 RUN apk add --no-cache bash openjdk8-jre ca-certificates wget \
