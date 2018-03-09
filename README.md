@@ -3,7 +3,7 @@
 [![](https://images.microbadger.com/badges/version/peez/hivemq.svg)](http://microbadger.com/images/peez/hivemq "Get your own version badge on microbadger.com")  [![](https://images.microbadger.com/badges/image/peez/hivemq.svg)](https://microbadger.com/images/peez/hivemq "Get your own image badge on microbadger.com")
 
 ## HiveMQ
-HiveMQ Version 3.3.1 is used currently
+HiveMQ Version 3.3.3 is used currently
 
 ### General
 
